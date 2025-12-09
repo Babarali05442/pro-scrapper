@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProScrape - Advanced Web Scraping Service</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .btn-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-gradient::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn-gradient:hover::before {
+            left: 100%;
+        }
+        
+        .floating-card {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 5px solid #FFF;
+            border-bottom-color: #667eea;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+        
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-completed {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            color: #0a5f3e;
+        }
+        
+        .status-running {
+            background: linear-gradient(135deg, #ffd89b 0%, #ffa751 100%);
+            color: #6b3410;
+            position: relative;
+        }
+        
+        .status-running::after {
+            content: "";
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 6px;
+            background: #ff6b00;
+            border-radius: 50%;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: translateY(-50%) scale(1); }
+            50% { opacity: 0.3; transform: translateY(-50%) scale(1.5); }
+        }
+        
+        .status-failed {
+            background: linear-gradient(135deg, #ffa0a0 0%, #ff6b6b 100%);
+            color: #8b0000;
+        }
+        
+        .status-queued {
+            background: linear-gradient(135deg, #e0e0e0 0%, #b0b0b0 100%);
+            color: #333;
+        }
+        
+        .input-modern {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            transition: all 0.3s ease;
+            padding: 12px 16px;
+            border-radius: 12px;
+        }
+        
+        .input-modern:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-1px);
+        }
+        
+        .table-hover tbody tr {
+            transition: all 0.2s ease;
+        }
+        
+        .table-hover tbody tr:hover {
+            background: rgba(102, 126, 234, 0.05);
+            transform: translateX(5px);
+        }
+        
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+        
+        .card-3d:hover {
+            transform: rotateY(5deg) rotateX(-5deg);
+        }
+        
+        .notification {
+            animation: slideInRight 0.5s ease-out;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .gradient-border {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2px;
+            border-radius: 12px;
+        }
+        
+        .gradient-border-inner {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        
+        .shine-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shine-effect::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            bottom: -50%;
+            left: -50%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .tab-active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .tab-inactive {
+            background: rgba(255, 255, 255, 0.7);
+            color: #666;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="min-h-screen p-6">
+        <!-- Navigation -->
+        <nav class="glass-morphism mb-8">
+            <div class="max-w-7xl mx-auto px-6 py-4">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-spider text-3xl text-purple-600"></i>
+                        <h1 class="text-3xl font-bold gradient-bg">ProScrape</h1>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <span id="userEmail" class="text-gray-700 font-medium hidden">
+                            <i class="fas fa-user-circle mr-2"></i>
+                            <span></span>
+                        </span>
+                        <button id="logoutBtn" class="btn-gradient text-white px-6 py-2 rounded-full font-semibold hidden">
+                            <i class="fas fa-sign-out-alt mr-2"></i>
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Login/Register Form -->
+        <div id="authSection" class="max-w-md mx-auto glass-morphism p-8 floating-card">
+            <div class="text-center mb-8">
+                <i class="fas fa-spider text-6xl text-purple-600 mb-4"></i>
+                <h2 class="text-3xl font-bold gradient-bg">Welcome to ProScrape</h2>
+                <p class="text-gray-600 mt-2">Advanced Web Data Extraction Platform</p>
+            </div>
+            
+            <div class="flex mb-6 rounded-full overflow-hidden shadow-md">
+                <button id="showLogin" class="w-1/2 py-3 tab-active font-semibold transition-all">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Login
+                </button>
+                <button id="showRegister" class="w-1/2 py-3 tab-inactive font-semibold transition-all">
+                    <i class="fas fa-user-plus mr-2"></i>Register
+                </button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="space-y-5 fade-in">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-envelope mr-1"></i>Email Address
+                    </label>
+                    <input type="email" id="loginEmail" required placeholder="you@example.com"
+                           class="input-modern w-full">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-lock mr-1"></i>Password
+                    </label>
+                    <input type="password" id="loginPassword" required placeholder="••••••••"
+                           class="input-modern w-full">
+                </div>
+                <button type="submit" class="w-full btn-gradient text-white py-3 rounded-full font-semibold text-lg">
+                    <i class="fas fa-rocket mr-2"></i>Sign In
+                </button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" class="space-y-5 hidden fade-in">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-envelope mr-1"></i>Email Address
+                    </label>
+                    <input type="email" id="registerEmail" required placeholder="you@example.com"
+                           class="input-modern w-full">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-lock mr-1"></i>Password
+                    </label>
+                    <input type="password" id="registerPassword" required minlength="6" placeholder="Min 6 characters"
+                           class="input-modern w-full">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-check-circle mr-1"></i>Confirm Password
+                    </label>
+                    <input type="password" id="confirmPassword" required minlength="6" placeholder="Re-enter password"
+                           class="input-modern w-full">
+                </div>
+                <button type="submit" class="w-full btn-gradient text-white py-3 rounded-full font-semibold text-lg">
+                    <i class="fas fa-user-plus mr-2"></i>Create Account
+                </button>
+            </form>
+
+            <div id="authMessage" class="mt-4 text-center"></div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="max-w-7xl mx-auto hidden">
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="glass-morphism p-6 text-center">
+                    <i class="fas fa-tasks text-3xl text-purple-600 mb-2"></i>
+                    <h3 class="text-2xl font-bold" id="totalJobs">0</h3>
+                    <p class="text-gray-600">Total Jobs</p>
+                </div>
+                <div class="glass-morphism p-6 text-center">
+                    <i class="fas fa-check-circle text-3xl text-green-600 mb-2"></i>
+                    <h3 class="text-2xl font-bold" id="completedJobs">0</h3>
+                    <p class="text-gray-600">Completed</p>
+                </div>
+                <div class="glass-morphism p-6 text-center">
+                    <i class="fas fa-spinner text-3xl text-yellow-600 mb-2"></i>
+                    <h3 class="text-2xl font-bold" id="runningJobs">0</h3>
+                    <p class="text-gray-600">Running</p>
+                </div>
+                <div class="glass-morphism p-6 text-center">
+                    <i class="fas fa-database text-3xl text-blue-600 mb-2"></i>
+                    <h3 class="text-2xl font-bold" id="dataExtracted">0</h3>
+                    <p class="text-gray-600">Records Scraped</p>
+                </div>
+            </div>
+
+            <!-- Add New Scraping Job -->
+            <div class="glass-morphism p-8 mb-8 slide-in">
+                <h2 class="text-2xl font-bold mb-6 gradient-bg">
+                    <i class="fas fa-plus-circle mr-2"></i>Create New Scraping Job
+                </h2>
+                <form id="scrapeForm" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                <i class="fas fa-link mr-1"></i>Target URL
+                            </label>
+                            <input type="url" id="targetUrl" required placeholder="https://example.com" 
+                                   class="input-modern w-full">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                <i class="fas fa-tag mr-1"></i>Job Description
+                            </label>
+                            <input type="text" id="jobDescription" placeholder="e.g., Product titles and prices" 
+                                   class="input-modern w-full">
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Extraction Mode</label>
+                            <select id="extractionMode" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                                <option value="auto">Auto-Extract</option>
+                                <option value="css">CSS Selectors</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Crawl Depth</label>
+                            <input type="number" id="crawlDepth" min="0" max="3" value="0" 
+                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Max Pages</label>
+                            <input type="number" id="maxPages" min="1" max="100" value="1" 
+                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                        </div>
+                    </div>
+
+                    <div id="cssSelectorsDiv" class="hidden space-y-2">
+                        <label class="block text-sm font-medium text-gray-700">CSS Selectors (JSON format)</label>
+                        <textarea id="cssSelectors" rows="4" placeholder='{"title": "h1", "price": ".price", "description": ".description"}'
+                                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border"></textarea>
+                    </div>
+
+                    <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">
+                        Start Scraping Job
+                    </button>
+                </form>
+                <div id="scrapeMessage" class="mt-4"></div>
+            </div>
+
+            <!-- Jobs List -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold mb-4">Your Scraping Jobs</h2>
+                <div id="jobsTableContainer" class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Job ID</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">URL</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="jobsTableBody" class="bg-white divide-y divide-gray-200">
+                            <!-- Jobs will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Modal -->
+        <div id="resultsModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden z-50">
+            <div class="relative top-20 mx-auto p-5 border w-11/12 max-w-6xl shadow-lg rounded-md bg-white">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold">Scraped Results</h3>
+                    <button onclick="closeResultsModal()" class="text-gray-400 hover:text-gray-600">✕</button>
+                </div>
+                <div id="resultsContent" class="max-h-96 overflow-auto">
+                    <!-- Results will be displayed here -->
+                </div>
+                <div class="mt-4 flex space-x-2">
+                    <button onclick="downloadResults('csv')" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                        Download CSV
+                    </button>
+                    <button onclick="downloadResults('json')" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        Download JSON
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API Configuration - Updated for Python backend
+        const API_URL = 'http://localhost:5000/api';
+        let currentUser = null;
+        let currentJobResults = null;
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            setupEventListeners();
+        });
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Auth form toggles
+            document.getElementById('showLogin').addEventListener('click', function() {
+                document.getElementById('loginForm').classList.remove('hidden');
+                document.getElementById('registerForm').classList.add('hidden');
+                this.classList.add('bg-blue-500', 'text-white');
+                this.classList.remove('bg-gray-300', 'text-gray-700');
+                document.getElementById('showRegister').classList.add('bg-gray-300', 'text-gray-700');
+                document.getElementById('showRegister').classList.remove('bg-blue-500', 'text-white');
+            });
+
+            document.getElementById('showRegister').addEventListener('click', function() {
+                document.getElementById('registerForm').classList.remove('hidden');
+                document.getElementById('loginForm').classList.add('hidden');
+                this.classList.add('bg-blue-500', 'text-white');
+                this.classList.remove('bg-gray-300', 'text-gray-700');
+                document.getElementById('showLogin').classList.add('bg-gray-300', 'text-gray-700');
+                document.getElementById('showLogin').classList.remove('bg-blue-500', 'text-white');
+            });
+
+            // Login form
+            document.getElementById('loginForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                await login(email, password);
+            });
+
+            // Register form
+            document.getElementById('registerForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                if (password !== confirmPassword) {
+                    showMessage('authMessage', 'Passwords do not match', 'error');
+                    return;
+                }
+                
+                await register(email, password);
+            });
+
+            // Logout
+            document.getElementById('logoutBtn').addEventListener('click', logout);
+
+            // Scrape form
+            document.getElementById('scrapeForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                await createScrapeJob();
+            });
+
+            // Extraction mode toggle
+            document.getElementById('extractionMode').addEventListener('change', function() {
+                const cssDiv = document.getElementById('cssSelectorsDiv');
+                if (this.value === 'css') {
+                    cssDiv.classList.remove('hidden');
+                } else {
+                    cssDiv.classList.add('hidden');
+                }
+            });
+        }
+
+        // Auth functions
+        async function checkAuth() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                try {
+                    const response = await fetch(`${API_URL}/auth/verify`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        currentUser = data.user;
+                        showDashboard();
+                    } else {
+                        localStorage.removeItem('token');
+                        showAuth();
+                    }
+                } catch (error) {
+                    showAuth();
+                }
+            } else {
+                showAuth();
+            }
+        }
+
+        async function login(email, password) {
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('token', data.token);
+                    currentUser = data.user;
+                    showDashboard();
+                } else {
+                    showMessage('authMessage', data.error || 'Login failed', 'error');
+                }
+            } catch (error) {
+                showMessage('authMessage', 'Network error. Please try again.', 'error');
+            }
+        }
+
+        async function register(email, password) {
+            try {
+                const response = await fetch(`${API_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showMessage('authMessage', 'Registration successful! Please login.', 'success');
+                    document.getElementById('showLogin').click();
+                } else {
+                    showMessage('authMessage', data.error || 'Registration failed', 'error');
+                }
+            } catch (error) {
+                showMessage('authMessage', 'Network error. Please try again.', 'error');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            currentUser = null;
+            showAuth();
+        }
+
+        // UI state functions
+        function showAuth() {
+            document.getElementById('authSection').classList.remove('hidden');
+            document.getElementById('dashboard').classList.add('hidden');
+            document.getElementById('userEmail').classList.add('hidden');
+            document.getElementById('logoutBtn').classList.add('hidden');
+        }
+
+        function showDashboard() {
+            document.getElementById('authSection').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
+            document.getElementById('userEmail').textContent = currentUser.email;
+            document.getElementById('userEmail').classList.remove('hidden');
+            document.getElementById('logoutBtn').classList.remove('hidden');
+            loadJobs();
+            updateStatistics();
+        }
+
+        // Scraping functions
+        async function createScrapeJob() {
+            const token = localStorage.getItem('token');
+            const targetUrl = document.getElementById('targetUrl').value;
+            const description = document.getElementById('jobDescription').value;
+            const mode = document.getElementById('extractionMode').value;
+            const depth = parseInt(document.getElementById('crawlDepth').value);
+            const maxPages = parseInt(document.getElementById('maxPages').value);
+            
+            let selectors = null;
+            if (mode === 'css') {
+                try {
+                    selectors = JSON.parse(document.getElementById('cssSelectors').value || '{}');
+                } catch (e) {
+                    showMessage('scrapeMessage', 'Invalid CSS selectors JSON format', 'error');
+                    return;
+                }
+            }
+
+            showMessage('scrapeMessage', 'Creating scraping job...', 'info');
+
+            try {
+                const response = await fetch(`${API_URL}/scrape/create`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        url: targetUrl,
+                        description,
+                        mode,
+                        crawl_depth: depth,
+                        max_pages: maxPages,
+                        selectors
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showMessage('scrapeMessage', 'Scraping job created successfully!', 'success');
+                    document.getElementById('scrapeForm').reset();
+                    loadJobs();
+                    
+                    // Start polling for job completion
+                    pollJobStatus(data.job_id);
+                } else {
+                    showMessage('scrapeMessage', data.error || 'Failed to create job', 'error');
+                }
+            } catch (error) {
+                showMessage('scrapeMessage', 'Network error. Please try again.', 'error');
+            }
+        }
+
+        async function loadJobs() {
+            const token = localStorage.getItem('token');
+            
+            try {
+                const response = await fetch(`${API_URL}/scrape/jobs`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    const jobs = await response.json();
+                    displayJobs(jobs);
+                    updateStatistics();
+                }
+            } catch (error) {
+                console.error('Error loading jobs:', error);
+            }
+        }
+        
+        // Update dashboard statistics
+        async function updateStatistics() {
+            const token = localStorage.getItem('token');
+            
+            try {
+                const response = await fetch(`${API_URL}/scrape/jobs`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    const jobs = await response.json();
+                    
+                    // Calculate statistics
+                    let totalJobs = jobs.length;
+                    let completedJobs = 0;
+                    let runningJobs = 0;
+                    let failedJobs = 0;
+                    let queuedJobs = 0;
+                    let totalRecords = 0;
+                    
+                    // Count jobs by status
+                    jobs.forEach(job => {
+                        switch(job.status) {
+                            case 'completed':
+                                completedJobs++;
+                                break;
+                            case 'running':
+                                runningJobs++;
+                                break;
+                            case 'failed':
+                                failedJobs++;
+                                break;
+                            case 'queued':
+                                queuedJobs++;
+                                break;
+                        }
+                    });
+                    
+                    // Update the statistics in the UI
+                    document.getElementById('totalJobs').textContent = totalJobs;
+                    document.getElementById('completedJobs').textContent = completedJobs;
+                    document.getElementById('runningJobs').textContent = runningJobs;
+                    
+                    // Get total records scraped from completed jobs
+                    let recordsPromises = [];
+                    for (const job of jobs) {
+                        if (job.status === 'completed') {
+                            recordsPromises.push(
+                                fetch(`${API_URL}/scrape/results/${job.id}`, {
+                                    headers: { 'Authorization': `Bearer ${token}` }
+                                }).then(r => r.json()).catch(() => [])
+                            );
+                        }
+                    }
+                    
+                    // Wait for all results and count records
+                    if (recordsPromises.length > 0) {
+                        const allResults = await Promise.all(recordsPromises);
+                        allResults.forEach(results => {
+                            if (Array.isArray(results)) {
+                                totalRecords += results.length;
+                            }
+                        });
+                    }
+                    
+                    document.getElementById('dataExtracted').textContent = totalRecords;
+                    
+                    // Add animation effect when numbers update
+                    ['totalJobs', 'completedJobs', 'runningJobs', 'dataExtracted'].forEach(id => {
+                        const element = document.getElementById(id);
+                        element.classList.add('fade-in');
+                        setTimeout(() => element.classList.remove('fade-in'), 500);
+                    });
+                }
+            } catch (error) {
+                console.error('Error updating statistics:', error);
+            }
+        }
+
+        function displayJobs(jobs) {
+            const tbody = document.getElementById('jobsTableBody');
+            tbody.innerHTML = '';
+
+            if (jobs.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-gray-500">No jobs found</td></tr>';
+                return;
+            }
+
+            jobs.forEach(job => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">${job.id.substring(0, 8)}...</td>
+                    <td class="px-6 py-4 text-sm max-w-xs truncate" title="${job.url}">${job.url}</td>
+                    <td class="px-6 py-4 text-sm">${job.description || '-'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                            ${job.status === 'completed' ? 'bg-green-100 text-green-800' : 
+                              job.status === 'failed' ? 'bg-red-100 text-red-800' : 
+                              job.status === 'running' ? 'bg-yellow-100 text-yellow-800' : 
+                              'bg-gray-100 text-gray-800'}">
+                            ${job.status}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">${new Date(job.created_at).toLocaleString()}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        ${job.status === 'completed' ? 
+                            `<button onclick="viewResults('${job.id}')" class="text-blue-600 hover:text-blue-900">View Results</button>` :
+                            '-'}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        async function pollJobStatus(jobId) {
+            const token = localStorage.getItem('token');
+            let attempts = 0;
+            const maxAttempts = 60; // Poll for max 5 minutes
+            
+            const pollInterval = setInterval(async () => {
+                attempts++;
+                
+                try {
+                    const response = await fetch(`${API_URL}/scrape/job/${jobId}`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        const job = await response.json();
+                        
+                        if (job.status === 'completed' || job.status === 'failed') {
+                            clearInterval(pollInterval);
+                            loadJobs();
+                            
+                            if (job.status === 'completed') {
+                                showMessage('scrapeMessage', 'Scraping completed successfully!', 'success');
+                            } else {
+                                showMessage('scrapeMessage', 'Scraping failed. Please check the job details.', 'error');
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error polling job status:', error);
+                }
+                
+                if (attempts >= maxAttempts) {
+                    clearInterval(pollInterval);
+                }
+            }, 5000); // Poll every 5 seconds
+        }
+
+        async function viewResults(jobId) {
+            const token = localStorage.getItem('token');
+            
+            try {
+                const response = await fetch(`${API_URL}/scrape/results/${jobId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    const results = await response.json();
+                    currentJobResults = results;
+                    displayResults(results);
+                }
+            } catch (error) {
+                console.error('Error loading results:', error);
+            }
+        }
+
+        function displayResults(results) {
+            const modal = document.getElementById('resultsModal');
+            const content = document.getElementById('resultsContent');
+            
+            if (!results || results.length === 0) {
+                content.innerHTML = '<p class="text-gray-500">No results found</p>';
+            } else {
+                // Create table
+                let html = '<div class="overflow-x-auto"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr>';
+                
+                // Get all keys from first result
+                const keys = Object.keys(results[0]);
+                keys.forEach(key => {
+                    html += `<th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">${key}</th>`;
+                });
+                html += '</tr></thead><tbody class="bg-white divide-y divide-gray-200">';
+                
+                // Add data rows
+                results.forEach(row => {
+                    html += '<tr>';
+                    keys.forEach(key => {
+                        const value = row[key];
+                        const displayValue = typeof value === 'object' ? JSON.stringify(value) : value;
+                        html += `<td class="px-4 py-2 text-sm text-gray-900 max-w-xs truncate" title="${displayValue}">${displayValue || '-'}</td>`;
+                    });
+                    html += '</tr>';
+                });
+                
+                html += '</tbody></table></div>';
+                content.innerHTML = html;
+            }
+            
+            modal.classList.remove('hidden');
+        }
+
+        function closeResultsModal() {
+            document.getElementById('resultsModal').classList.add('hidden');
+        }
+
+        function downloadResults(format) {
+            if (!currentJobResults) return;
+            
+            if (format === 'csv') {
+                downloadCSV(currentJobResults);
+            } else if (format === 'json') {
+                downloadJSON(currentJobResults);
+            }
+        }
+
+        function downloadCSV(data) {
+            if (!data || data.length === 0) return;
+            
+            const keys = Object.keys(data[0]);
+            let csv = keys.join(',') + '\n';
+            
+            data.forEach(row => {
+                const values = keys.map(key => {
+                    const value = row[key];
+                    const strValue = typeof value === 'object' ? JSON.stringify(value) : String(value || '');
+                    return '"' + strValue.replace(/"/g, '""') + '"';
+                });
+                csv += values.join(',') + '\n';
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `scrape_results_${Date.now()}.csv`;
+            a.click();
+        }
+
+        function downloadJSON(data) {
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `scrape_results_${Date.now()}.json`;
+            a.click();
+        }
+
+        function showMessage(elementId, message, type) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = 'mt-4 text-center p-2 rounded';
+            
+            if (type === 'error') {
+                element.className += ' bg-red-100 text-red-700';
+            } else if (type === 'success') {
+                element.className += ' bg-green-100 text-green-700';
+            } else {
+                element.className += ' bg-blue-100 text-blue-700';
+            }
+            
+            setTimeout(() => {
+                element.textContent = '';
+                element.className = 'mt-4';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
